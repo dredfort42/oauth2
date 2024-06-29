@@ -71,6 +71,18 @@ After building the Docker image, run the service using the following command:
 docker run -p 4242:4242 auth
 ```
 
+The service will start and listen on port 4242.
+
+### Running the Service with Docker Hub Images
+
+To run the service using Docker Hub images, use the following command:
+
+```bash
+docker run -p 4242:4242 dredfort/auth:latest
+```
+
+This will download the service from Docker Hub and start it, listening on port 4242.
+
 ## API
 
 The service provides API endpoints for OAuth 2.0 Authorization and OAuth 2.0 Device Authorization. The API endpoints are described in the [openapi.yaml](/api/openapi.yml) file.
