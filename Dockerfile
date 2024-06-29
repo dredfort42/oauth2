@@ -14,7 +14,7 @@ WORKDIR /app
 RUN CGO_ENABLED=0 go build -o ./auth ./...
 
 FROM scratch
-COPY --from=build /app/auth /auth
-COPY --from=build /app/config.ini /config.ini
+COPY --from=build /app/auth /app/auth
+COPY --from=build /app/config.ini /app/config.ini
 
-CMD ["/auth"]
+CMD ["/app/auth"]
