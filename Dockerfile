@@ -11,7 +11,7 @@ FROM env AS build
 COPY . /app
 WORKDIR /app
 
-RUN CGO_ENABLED=0 go build -o ./auth ./...
+RUN CGO_ENABLED=0 go build -o ./auth ./cmd/auth/main.go
 
 FROM scratch
 COPY --from=build /app/auth /app/auth
