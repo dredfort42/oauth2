@@ -22,6 +22,5 @@ jobs:
 
     - name: Build and push Docker image for auch
       run: |
-          docker pull dredfort/auth:latest || true
           docker build -t dredfort/auth:latest .
           docker push dredfort/auth:latest
