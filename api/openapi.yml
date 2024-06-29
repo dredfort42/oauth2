@@ -3,18 +3,17 @@ openapi: 3.0.0
 info:
   version: 1.0.0
   title: Authorization service API
-  termsOfService: "https://rupl.org/terms/"
   contact:
-    name: Rupl
-    email: i@rupl.org
-    url: "https://rupl.org/contact"
+    name: Dmitry Novikov
+    email: dredfort.42@gmail.com
+    url: "https://github.com/dredfort42"
   license:
     name: GNU General Public License v3.0
     url: "https://www.gnu.org/licenses/gpl-3.0.html"
   x-logo:
-    url: "https://rupl.org/images/rupl-logo.png"
+    url: "https://avatars.githubusercontent.com/u/102029973?v=4"
   description: |
-    This is a description of the rupl.org authorization service API and its operations.
+    This is a description of the OAuth 2.0 authorization service API and its operations.
 
 tags:
   - name: User
@@ -25,10 +24,6 @@ tags:
       The OAuth 2.0 device authorization for browserless and input-constrained devices like watches and fitness trackers.
 
 servers:
-  - url: "https://rupl.org"
-    description: "Production server"
-  - url: "http://dredfort.ddns.net:4242"
-    description: "Development server"
   - url: "http://localhost:4242"
     description: "Local server"
 
@@ -39,7 +34,7 @@ paths:
         - User
       summary: Register a new user
       description: |
-        Register a new user with the rupl.org authorization service.
+        Register a new user with the authorization service.
       operationId: register_user
       requestBody:
         content:
@@ -121,7 +116,7 @@ paths:
         - User
       summary: Identify a user's
       description: |
-        Identify a user with the rupl.org authorization service.
+        Identify a user with the authorization service.
       operationId: identify_user
       responses:
         "200":
@@ -156,7 +151,7 @@ paths:
         - User
       summary: Delete a user
       description: |
-        Delete a user from the rupl.org authorization service.
+        Delete a user from the authorization service.
       operationId: delete_user
       responses:
         "200":
@@ -235,7 +230,7 @@ paths:
       tags:
         - User
       description: |
-        Login a user with the rupl.org authorization service.
+        Login a user with the authorization service.
       operationId: login_user
       parameters:
         - name: remember
@@ -295,7 +290,7 @@ paths:
         - User
       summary: Refresh a user's access and refresh tokens
       description: |
-        Refresh a user's access and refresh tokens with the rupl.org authorization service.
+        Refresh a user's access and refresh tokens with the authorization service.
       operationId: refresh_tokens
       responses:
         "200":
@@ -347,7 +342,7 @@ paths:
         - User
       summary: Logout a user
       description: |
-        Logout a user from the rupl.org authorization service.
+        Logout a user from the authorization service.
       operationId: logout_user
       parameters:
         - name: all
@@ -402,7 +397,7 @@ paths:
         - User
       summary: Change a user's password
       description: |
-        Change a user's password with the rupl.org authorization service.
+        Change a user's password with the authorization service.
       operationId: change_password
       requestBody:
         required: true
@@ -497,7 +492,7 @@ paths:
         - User
       summary: Change a user's email
       description: |
-        Change a user's email with the rupl.org authorization service.
+        Change a user's email with the authorization service.
       operationId: change_email
       requestBody:
         required: true
@@ -600,7 +595,7 @@ paths:
         - Device
       summary: Authorize a device
       description: |
-        Authorize a device with the rupl.org authorization service.
+        Authorize a device with the authorization service.
       operationId: authorize_device
       parameters:
         - name: client_id
@@ -642,7 +637,7 @@ paths:
         - Device
       summary: Verify a device
       description: |
-        Verify a device with the rupl.org authorization service.
+        Verify a device with the authorization service.
       operationId: verify_device
       parameters:
         - name: user_code
@@ -723,7 +718,7 @@ paths:
         - Device
       summary: Get a device token
       description: |
-        Get a device token with the rupl.org authorization service.
+        Get a device token with the authorization service.
       operationId: get_device_token
       parameters:
         - name: grant_type
@@ -791,7 +786,7 @@ paths:
         - Device
       summary: Identify a device
       description: |
-        Identify a device with the rupl.org authorization service.
+        Identify a device with the authorization service.
       operationId: identify_device
       parameters:
         - name: client_id
@@ -847,7 +842,7 @@ paths:
         - Device
       summary: Delete a device
       description: |
-        Delete a device from the rupl.org authorization service.
+        Delete a device from the authorization service.
       operationId: delete_device
       parameters:
         - name: client_id
@@ -913,7 +908,7 @@ paths:
         - Device
       summary: Refresh a device's access and refresh tokens
       description: |
-        Refresh a device's access and refresh tokens with the rupl.org authorization service.
+        Refresh a device's access and refresh tokens with the authorization service.
       operationId: refresh_device_tokens
       parameters:
         - name: client_id
