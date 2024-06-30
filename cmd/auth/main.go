@@ -4,6 +4,7 @@ import (
 	"auth/internal/api"
 	"auth/internal/db"
 	"os"
+	"sort"
 
 	cfg "github.com/dredfort42/tools/configreader"
 	loger "github.com/dredfort42/tools/logprinter"
@@ -16,7 +17,15 @@ func main() {
 	}
 
 	if os.Getenv("DEBUG") == "1" {
-		for key, value := range cfg.Config {
+		keys := make([]string, 0, len(cfg.Config))
+		for key := range cfg.Config {
+			keys = append(keys, key)
+		}
+		sort.Strings(keys)
+
+		loger.Debug("Config:")
+		for _, key := range keys {
+			value := cfg.Config[key]
 			if key == "db.password" {
 				value = "********"
 			}
