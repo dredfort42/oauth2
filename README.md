@@ -10,6 +10,12 @@ The service use Postgres as a database for storing user data, sessions, and devi
 
 - OAuth 2.0 Authorization
 - OAuth 2.0 Device Authorization
+- User Registration and Authentication with `Email` and `Password`
+- User Profile Management
+- Session Management
+- Device Management
+- User Data Encryption
+- User Data Validation
 
 ## Configuration
 

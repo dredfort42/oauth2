@@ -4,14 +4,15 @@ import (
 	"auth/internal/db"
 	s "auth/internal/structs"
 	"net/http"
-	"strings"
+	"regexp"
 
 	"github.com/gin-gonic/gin"
 )
 
 // IsUserEmailValid checks the email address
 func IsUserEmailValid(email string) (result bool) {
-	return strings.Contains(email, "@") && strings.Contains(email, ".")
+	re := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
+	return re.MatchString(email)
 }
 
 // UserEmailChange changes the user email address

@@ -5,31 +5,53 @@ import (
 	s "auth/internal/structs"
 	"net/http"
 	"strings"
+	"unicode"
 
 	"github.com/gin-gonic/gin"
 )
 
 // IsUserPasswordStrength checks the password strength
 func IsUserPasswordStrength(password string) (result bool) {
-	return len(password) >= 8
+	if len(password) < s.PasswordConfig.RequireLength {
+		return
+	}
+
+	var hasUpper bool
+	var hasLower bool
+	var hasNumber bool
+	var hasSymbol bool
+
+	for _, char := range password {
+		switch {
+		case unicode.IsUpper(char):
+			hasUpper = true
+		case unicode.IsLower(char):
+			hasLower = true
+		case unicode.IsNumber(char):
+			hasNumber = true
+		case unicode.IsSymbol(char) || unicode.IsPunct(char):
+			hasSymbol = true
+		}
+	}
+
+	if (s.PasswordConfig.RequireUpper && !hasUpper) ||
+		(s.PasswordConfig.RequireLower && !hasLower) ||
+		(s.PasswordConfig.RequireNumber && !hasNumber) ||
+		(s.PasswordConfig.RequireSymbol && !hasSymbol) {
+		return
+	}
+
+	return true
 }
 
 // IsUserPasswordContainsForbiddenCharacters checks the password for forbidden symbols
 func IsUserPasswordContainsForbiddenCharacters(password string) (result bool) {
-	if strings.Contains(password, " ") {
-		return true
-	}
+	forbiddenSymbols := " <>;&%\x00\r\n\\"
 
-	if strings.Contains(password, "	") {
-		return true
-	}
-
-	if strings.Contains(password, "\n") {
-		return true
-	}
-
-	if strings.Contains(password, "\r") {
-		return true
+	for _, char := range password {
+		if strings.ContainsRune(forbiddenSymbols, char) {
+			return true
+		}
 	}
 
 	return
