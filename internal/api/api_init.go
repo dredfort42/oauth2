@@ -34,7 +34,6 @@ func ApiInit() {
 		router.Use(cors.Default())
 	}
 
-	router.Use(cors.Default())
 	router.POST("/api/v1/auth/user/signup", UserSignUp)
 	router.GET("/api/v1/auth/user/identify", UserIdentify)
 	router.DELETE("/api/v1/auth/user/delete", UserDelete)
