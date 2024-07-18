@@ -2,6 +2,7 @@ package main
 
 import (
 	"auth/internal/api"
+	"auth/internal/config"
 	"auth/internal/db"
 	"os"
 	"sort"
@@ -16,7 +17,7 @@ func main() {
 		panic(err)
 	}
 
-	if os.Getenv("DEBUG") == "1" {
+	if os.Getenv("DEBUG") == "true" || os.Getenv("DEBUG") == "1" {
 		keys := make([]string, 0, len(cfg.Config))
 		for key := range cfg.Config {
 			keys = append(keys, key)
@@ -33,6 +34,9 @@ func main() {
 			loger.Debug(key, value)
 		}
 	}
+
+	config.JWTConfigRead()
+	config.PasswordConfigRead()
 
 	db.DatabaseInit()
 	api.ApiInit()

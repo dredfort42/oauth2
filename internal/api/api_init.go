@@ -20,7 +20,6 @@ var deviceVerificationCodeAttempts int
 // ApiInit starts the web service
 func ApiInit() {
 	ServiceConfigRead()
-	JWTConfigRead()
 
 	if os.Getenv("DEBUG") != "true" && os.Getenv("DEBUG") != "1" {
 		gin.SetMode(gin.ReleaseMode)

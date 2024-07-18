@@ -10,7 +10,6 @@ import (
 // UserIdentify identifies user
 func UserIdentify(c *gin.Context) {
 	var errorResponse s.ResponseError
-	var err error
 
 	accessToken, err := c.Cookie("access_token")
 	if err != nil {

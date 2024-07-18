@@ -68,7 +68,7 @@ func verifyToken(token string, tokenType s.TokenType) (email string, err error) 
 		return
 	}
 
-	email = db.IsTokenExist(id, token, tokenType)
+	email = db.TokenAssociatedEmail(id, token, tokenType)
 	if email == "" {
 		err = errors.New("token does not exist")
 	}

@@ -4,8 +4,8 @@ import (
 	s "auth/internal/structs"
 )
 
-// IsTokenExist checks if token exists in the database
-func IsTokenExist(id string, token string, tokenType s.TokenType) (email string) {
+// TokenAssociatedEmail returns email associated with a token
+func TokenAssociatedEmail(id string, token string, tokenType s.TokenType) (email string) {
 	var query string
 
 	switch tokenType {
@@ -13,25 +13,29 @@ func IsTokenExist(id string, token string, tokenType s.TokenType) (email string)
 		query = `
 			SELECT email
 			FROM ` + db.tableSessions + `
-			WHERE email = $1 AND access_token = $2;
+			WHERE email = $1 AND access_token = $2
+			LIMIT 1;
 		`
 	case s.RefreshToken:
 		query = `
 			SELECT email
 			FROM ` + db.tableSessions + `
-			WHERE email = $1 AND refresh_token = $2;
+			WHERE email = $1 AND refresh_token = $2
+			LIMIT 1;
 		`
 	case s.DeviceAccessToken:
 		query = `
 			SELECT email
 			FROM ` + db.tableDevices + `
-			WHERE device_uuid = $1 AND device_access_token = $2;
+			WHERE device_uuid = $1 AND device_access_token = $2
+			LIMIT 1;
 		`
 	case s.DeviceRefreshToken:
 		query = `
 			SELECT email
 			FROM ` + db.tableDevices + `
-			WHERE device_uuid = $1 AND device_refresh_token = $2;
+			WHERE device_uuid = $1 AND device_refresh_token = $2
+			LIMIT 1;
 		`
 	default:
 		return
