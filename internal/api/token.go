@@ -62,13 +62,14 @@ func parseToken(token string) (id string, err error) {
 }
 
 // verifyToken verifies token
-func verifyToken(token string, tokenType s.TokenType) (id string, err error) {
-	id, err = parseToken(token)
+func verifyToken(token string, tokenType s.TokenType) (email string, err error) {
+	id, err := parseToken(token)
 	if err != nil {
 		return
 	}
 
-	if !db.IsTokenExist(id, token, tokenType) {
+	email = db.IsTokenExist(id, token, tokenType)
+	if email == "" {
 		err = errors.New("token does not exist")
 	}
 

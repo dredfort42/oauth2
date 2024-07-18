@@ -5,31 +5,31 @@ import (
 )
 
 // IsTokenExist checks if token exists in the database
-func IsTokenExist(id string, token string, tokenType s.TokenType) (result bool) {
+func IsTokenExist(id string, token string, tokenType s.TokenType) (email string) {
 	var query string
 
 	switch tokenType {
 	case s.AccessToken:
 		query = `
-			SELECT 1
+			SELECT email
 			FROM ` + db.tableSessions + `
 			WHERE email = $1 AND access_token = $2;
 		`
 	case s.RefreshToken:
 		query = `
-			SELECT 1
+			SELECT email
 			FROM ` + db.tableSessions + `
 			WHERE email = $1 AND refresh_token = $2;
 		`
 	case s.DeviceAccessToken:
 		query = `
-			SELECT 1
+			SELECT email
 			FROM ` + db.tableDevices + `
 			WHERE device_uuid = $1 AND device_access_token = $2;
 		`
 	case s.DeviceRefreshToken:
 		query = `
-			SELECT 1
+			SELECT email
 			FROM ` + db.tableDevices + `
 			WHERE device_uuid = $1 AND device_refresh_token = $2;
 		`
@@ -37,7 +37,7 @@ func IsTokenExist(id string, token string, tokenType s.TokenType) (result bool) 
 		return
 	}
 
-	db.database.QueryRow(query, id, token).Scan(&result)
+	db.database.QueryRow(query, id, token).Scan(&email)
 
 	return
 }

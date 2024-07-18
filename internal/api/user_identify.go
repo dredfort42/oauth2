@@ -9,11 +9,10 @@ import (
 
 // UserIdentify identifies user
 func UserIdentify(c *gin.Context) {
-	var accessToken string
 	var errorResponse s.ResponseError
 	var err error
 
-	accessToken, err = c.Cookie("access_token")
+	accessToken, err := c.Cookie("access_token")
 	if err != nil {
 		errorResponse.Error = "token_error"
 		errorResponse.ErrorDescription = "missing access token"

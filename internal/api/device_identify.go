@@ -1,7 +1,6 @@
 package api
 
 import (
-	"auth/internal/db"
 	s "auth/internal/structs"
 	"net/http"
 
@@ -10,7 +9,6 @@ import (
 
 // DeviceIdentify identifies the device
 func DeviceIdentify(c *gin.Context) {
-	var deviceUUID string
 	var errorResponse s.ResponseError
 	var err error
 
@@ -32,18 +30,10 @@ func DeviceIdentify(c *gin.Context) {
 		return
 	}
 
-	deviceUUID, err = verifyToken(accessToken, s.DeviceAccessToken)
-	if err != nil || deviceUUID != clientID {
-		errorResponse.Error = "token_error"
-		errorResponse.ErrorDescription = "failed to verify device access token"
-		c.IndentedJSON(http.StatusUnauthorized, errorResponse)
-		return
-	}
-
-	email, err := db.DeviceGetUser(deviceUUID)
+	email, err := verifyToken(accessToken, s.DeviceAccessToken)
 	if err != nil {
 		errorResponse.Error = "token_error"
-		errorResponse.ErrorDescription = "failed to get user associated with the device"
+		errorResponse.ErrorDescription = "failed to verify device access token"
 		c.IndentedJSON(http.StatusUnauthorized, errorResponse)
 		return
 	}
