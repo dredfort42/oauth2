@@ -21,7 +21,7 @@ func UserIdentify(c *gin.Context) {
 		return
 	}
 
-	_, err = verifyToken(accessToken, s.AccessToken)
+	email, err := verifyToken(accessToken, s.AccessToken)
 	if err != nil {
 		errorResponse.Error = "token_error"
 		errorResponse.ErrorDescription = "failed to verify access token"
@@ -29,5 +29,5 @@ func UserIdentify(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "user successfully identified"})
+	c.JSON(http.StatusOK, gin.H{"email": email})
 }

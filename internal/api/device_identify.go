@@ -1,6 +1,7 @@
 package api
 
 import (
+	"auth/internal/db"
 	s "auth/internal/structs"
 	"net/http"
 
@@ -39,5 +40,13 @@ func DeviceIdentify(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "device successfully identified"})
+	email, err := db.DeviceGetUser(deviceUUID)
+	if err != nil {
+		errorResponse.Error = "token_error"
+		errorResponse.ErrorDescription = "failed to get user associated with the device"
+		c.IndentedJSON(http.StatusUnauthorized, errorResponse)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"email": email})
 }

@@ -124,7 +124,7 @@ paths:
           content:
             application/json:
               example:
-                message: "user successfully identified"
+                email: "john.smith@example.com"
         "401":
           description: Unauthorized
           content:
@@ -803,7 +803,7 @@ paths:
           content:
             application/json:
               example:
-                message: "device successfully identified"
+                email: "john.smith@example.com"
         "400":
           description: Bad Request
           content:
