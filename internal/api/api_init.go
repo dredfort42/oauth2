@@ -10,6 +10,7 @@ import (
 
 var host string
 var port string
+var corsStatus string
 var deviceVerificationURI string
 var deviceVerificationCodeCharSet string
 var deviceVerificationCodeLength int
@@ -21,13 +22,18 @@ func ApiInit() {
 	ServiceConfigRead()
 	JWTConfigRead()
 
-	if os.Getenv("DEBUG") != "1" {
+	if os.Getenv("DEBUG") != "true" && os.Getenv("DEBUG") != "1" {
 		gin.SetMode(gin.ReleaseMode)
 	} else {
 		gin.SetMode(gin.DebugMode)
 	}
 
 	router := gin.Default()
+
+	if corsStatus == "true" || corsStatus == "1" {
+		router.Use(cors.Default())
+	}
+
 	router.Use(cors.Default())
 	router.POST("/api/v1/auth/user/signup", UserSignUp)
 	router.GET("/api/v1/auth/user/identify", UserIdentify)

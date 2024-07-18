@@ -19,6 +19,11 @@ func ServiceConfigRead() {
 		panic("auth.port is not set")
 	}
 
+	corsStatus = cfg.Config["auth.cors"]
+	if corsStatus == "" {
+		panic("auth.cors is not set")
+	}
+
 	deviceVerificationURI = cfg.Config["auth.device.verification.url"]
 	if deviceVerificationURI == "" {
 		panic("auth.device.verification.url is not set")
