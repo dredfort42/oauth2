@@ -30,7 +30,12 @@ func UserEmailChange(email string, newEmail string) (err error) {
 
 	_, err = db.database.Exec(query, email, newEmail)
 	if err != nil {
-		loger.Error("Failed to update user in the database", err)
+		loger.Error("Failed to update user in the users table", err)
+	}
+
+	if !DeviceExistsCheck(email) {
+		loger.Warning("No devices found for the user", email)
+		return
 	}
 
 	query = `
@@ -41,7 +46,7 @@ func UserEmailChange(email string, newEmail string) (err error) {
 
 	_, err = db.database.Exec(query, email, newEmail)
 	if err != nil {
-		loger.Error("Failed to update devices in the database", err)
+		loger.Error("Failed to update devices in the devices table", err)
 	}
 
 	return
