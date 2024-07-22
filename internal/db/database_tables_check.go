@@ -48,7 +48,7 @@ func checkDevicesTable() {
 			device_refresh_token VARCHAR(255) NOT NULL,
 			email VARCHAR(255) NOT NULL,
 			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-			CONSTRAINT devices_unique UNIQUE (device_uuid, email)
+			CONSTRAINT auth_devices_unique UNIQUE (device_uuid, email)
 		);
 	`
 	_, err := db.database.Exec(query)
