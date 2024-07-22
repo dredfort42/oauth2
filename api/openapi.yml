@@ -146,13 +146,24 @@ paths:
   /api/v1/auth/user/delete:
     delete:
       security:
-        - OAuth2AccessToken: [write, admin]
+        - OAuth2AccessToken: []
       tags:
         - User
       summary: Delete a user
       description: |
         Delete a user from the authorization service.
       operationId: delete_user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  $ref: "#/components/schemas/Email"
+                password:
+                  $ref: "#/components/schemas/Password"
       responses:
         "200":
           description: OK
