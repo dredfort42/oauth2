@@ -549,11 +549,6 @@ paths:
                   value:
                     error: "invalid_parameter"
                     error_description: "password is required"
-                invalidPassword:
-                  summary: Invalid password
-                  value:
-                    error: "invalid_parameter"
-                    error_description: "password is invalid"
         "401":
           description: Unauthorized
           content:

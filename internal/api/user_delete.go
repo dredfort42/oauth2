@@ -3,6 +3,7 @@ package api
 import (
 	"auth/internal/db"
 	s "auth/internal/structs"
+	"encoding/base64"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -44,6 +45,16 @@ func UserDelete(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, errorResponse)
 		return
 	}
+
+	password, err := base64.StdEncoding.DecodeString(deleteRequest.Password)
+	if err != nil {
+		errorResponse.Error = "invalid_parameter"
+		errorResponse.ErrorDescription = "password is invalid"
+		c.IndentedJSON(http.StatusUnauthorized, errorResponse)
+		return
+	}
+
+	deleteRequest.Password = string(password)
 
 	if !db.IsUserPasswordCorrect(deleteRequest.Email, deleteRequest.Password) {
 		errorResponse.Error = "invalid_parameter"

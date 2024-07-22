@@ -77,7 +77,7 @@ func UserEmailChange(c *gin.Context) {
 	if err != nil {
 		errorResponse.Error = "invalid_parameter"
 		errorResponse.ErrorDescription = "password is invalid"
-		c.IndentedJSON(http.StatusBadRequest, errorResponse)
+		c.IndentedJSON(http.StatusUnauthorized, errorResponse)
 		return
 	}
 
