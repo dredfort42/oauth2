@@ -34,7 +34,6 @@ func UserEmailChange(email string, newEmail string) (err error) {
 	}
 
 	if !DeviceExistsCheck(email) {
-		loger.Warning("No devices found for the user", email)
 		return
 	}
 
