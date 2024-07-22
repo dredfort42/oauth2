@@ -3,6 +3,7 @@ package api
 import (
 	"auth/internal/db"
 	s "auth/internal/structs"
+	"encoding/base64"
 	"net/http"
 	"strings"
 	"unicode"
@@ -84,6 +85,25 @@ func UserPasswordChange(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, errorResponse)
 		return
 	}
+
+	oldPassword, err := base64.StdEncoding.DecodeString(changePasswordRequest.OldPassword)
+	if err != nil {
+		errorResponse.Error = "invalid_parameter"
+		errorResponse.ErrorDescription = "old password is invalid"
+		c.IndentedJSON(http.StatusUnauthorized, errorResponse)
+		return
+	}
+
+	newPassword, err := base64.StdEncoding.DecodeString(changePasswordRequest.NewPassword)
+	if err != nil {
+		errorResponse.Error = "invalid_parameter"
+		errorResponse.ErrorDescription = "new password is invalid"
+		c.IndentedJSON(http.StatusBadRequest, errorResponse)
+		return
+	}
+
+	changePasswordRequest.OldPassword = string(oldPassword)
+	changePasswordRequest.NewPassword = string(newPassword)
 
 	if IsUserPasswordContainsForbiddenCharacters(changePasswordRequest.NewPassword) {
 		errorResponse.Error = "invalid_parameter"

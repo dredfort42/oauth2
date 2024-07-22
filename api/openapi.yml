@@ -439,6 +439,11 @@ paths:
                   value:
                     error: "invalid_parameter"
                     error_description: "old password and new password are the same"
+                invalidNewPassword:
+                  summary: Invalid new password
+                  value:
+                    error: "invalid_parameter"
+                    error_description: "new password is invalid"
                 passwordContainsForbiddenCharacters:
                   summary: Password contains forbidden characters
                   value:
@@ -1029,7 +1034,7 @@ components:
       example: john.smith@example.com
     Password:
       description: |
-        User password
+        User password (base64 encoded)
       type: string
       format: password
       example: P@ssw0rd
