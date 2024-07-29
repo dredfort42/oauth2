@@ -32,7 +32,7 @@ func DeviceDelete(c *gin.Context) {
 	}
 
 	deviceUUID, err = verifyToken(accessToken, s.DeviceAccessToken)
-	if err != nil || deviceUUID != clientID {
+	if err != nil {
 		errorResponse.Error = "token_error"
 		errorResponse.ErrorDescription = "failed to verify device access token"
 		c.IndentedJSON(http.StatusUnauthorized, errorResponse)
