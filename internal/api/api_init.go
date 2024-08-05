@@ -1,6 +1,7 @@
 package api
 
 import (
+	"auth/internal/db"
 	"os"
 
 	loger "github.com/dredfort42/tools/logprinter"
@@ -51,4 +52,6 @@ func ApiInit() {
 	url := host + ":" + port
 	loger.Success("Service successfully started", url)
 	router.Run(url)
+
+	db.DB.Database.Close()
 }

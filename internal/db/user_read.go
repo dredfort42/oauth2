@@ -4,11 +4,11 @@ package db
 func IsUserExists(email string) (result bool) {
 	query := `
 		SELECT 1 
-		FROM ` + db.tableUsers + ` 
+		FROM ` + DB.TableUsers + ` 
 		WHERE email = $1
 	`
 
-	db.database.QueryRow(query, email).Scan(&result)
+	DB.Database.QueryRow(query, email).Scan(&result)
 
 	return
 }
@@ -17,12 +17,12 @@ func IsUserExists(email string) (result bool) {
 func IsUserPasswordCorrect(email string, password string) (result bool) {
 	query := `
 		SELECT 1
-		FROM ` + db.tableUsers + `
+		FROM ` + DB.TableUsers + `
 		WHERE email = $1
 		AND password_hash = crypt($2, password_hash)
 	`
 
-	db.database.QueryRow(query, email, password).Scan(&result)
+	DB.Database.QueryRow(query, email, password).Scan(&result)
 
 	return
 }

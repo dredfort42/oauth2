@@ -10,11 +10,11 @@ import (
 func DeviceExistsCheck(email string) (result bool) {
 	query := `
 		SELECT 1
-		FROM ` + db.tableDevices + `
+		FROM ` + DB.TableDevices + `
 		WHERE email = $1
 	`
 
-	err := db.database.QueryRow(query, email).Scan(&result)
+	err := DB.Database.QueryRow(query, email).Scan(&result)
 	if err != nil && err != sql.ErrNoRows {
 		loger.Error("Failed to check if device exists in the database", err)
 	}

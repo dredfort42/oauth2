@@ -20,13 +20,13 @@ func SessionUpdateOneTime(email string, accessToken string, refreshToken string)
 // SessionUpdate updates access and refresh tokens
 func SessionUpdate(email string, refreshToken string, newAccessToken string, newRefreshToken string) (err error) {
 	query := `
-		UPDATE ` + db.tableSessions + `
+		UPDATE ` + DB.TableSessions + `
 		SET access_token = $3, refresh_token = $4, created_at = CURRENT_TIMESTAMP
 		WHERE email = $1
 		AND refresh_token = $2;
 	`
 
-	_, err = db.database.Exec(query, email, refreshToken, newAccessToken, newRefreshToken)
+	_, err = DB.Database.Exec(query, email, refreshToken, newAccessToken, newRefreshToken)
 	if err != nil {
 		loger.Error("Failed to update session in the database", err)
 	}

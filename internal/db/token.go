@@ -12,28 +12,28 @@ func TokenAssociatedEmail(id string, token string, tokenType s.TokenType) (email
 	case s.AccessToken:
 		query = `
 			SELECT email
-			FROM ` + db.tableSessions + `
+			FROM ` + DB.TableSessions + `
 			WHERE email = $1 AND access_token = $2
 			LIMIT 1;
 		`
 	case s.RefreshToken:
 		query = `
 			SELECT email
-			FROM ` + db.tableSessions + `
+			FROM ` + DB.TableSessions + `
 			WHERE email = $1 AND refresh_token = $2
 			LIMIT 1;
 		`
 	case s.DeviceAccessToken:
 		query = `
 			SELECT email
-			FROM ` + db.tableDevices + `
+			FROM ` + DB.TableDevices + `
 			WHERE device_uuid = $1 AND device_access_token = $2
 			LIMIT 1;
 		`
 	case s.DeviceRefreshToken:
 		query = `
 			SELECT email
-			FROM ` + db.tableDevices + `
+			FROM ` + DB.TableDevices + `
 			WHERE device_uuid = $1 AND device_refresh_token = $2
 			LIMIT 1;
 		`
@@ -41,7 +41,7 @@ func TokenAssociatedEmail(id string, token string, tokenType s.TokenType) (email
 		return
 	}
 
-	db.database.QueryRow(query, id, token).Scan(&email)
+	DB.Database.QueryRow(query, id, token).Scan(&email)
 
 	return
 }
@@ -50,11 +50,11 @@ func TokenAssociatedEmail(id string, token string, tokenType s.TokenType) (email
 func IsOneTimeRefreshToken(refreshToken string) (result bool) {
 	query := `
 		SELECT 1
-		FROM ` + db.tableSessions + `
+		FROM ` + DB.TableSessions + `
 		WHERE refresh_token = $1 AND is_one_time = TRUE;
 	`
 
-	db.database.QueryRow(query, refreshToken).Scan(&result)
+	DB.Database.QueryRow(query, refreshToken).Scan(&result)
 
 	return
 }

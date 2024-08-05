@@ -5,7 +5,7 @@ import loger "github.com/dredfort42/tools/logprinter"
 // UserSignUp adds a new user to the database
 func UserSignUp(email string, password string, accessToken string, refreshToken string) (err error) {
 	query := `
-		INSERT INTO ` + db.tableUsers + ` (
+		INSERT INTO ` + DB.TableUsers + ` (
 			email,
 			password_hash
 		) VALUES (
@@ -14,7 +14,7 @@ func UserSignUp(email string, password string, accessToken string, refreshToken 
 		)
 	`
 
-	_, err = db.database.Exec(query, email, password)
+	_, err = DB.Database.Exec(query, email, password)
 	if err != nil {
 		loger.Error("Failed to create user in the database", err)
 		return

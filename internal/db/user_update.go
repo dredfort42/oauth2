@@ -5,13 +5,13 @@ import loger "github.com/dredfort42/tools/logprinter"
 // UserPasswordChange updates a user's password in the database
 func UserPasswordChange(email string, newPassword string) (err error) {
 	query := `
-		UPDATE ` + db.tableUsers + `
+		UPDATE ` + DB.TableUsers + `
 		SET	password_hash = crypt($2, gen_salt('bf')),
 			updated_at = CURRENT_TIMESTAMP
 		WHERE email = $1;
 	`
 
-	_, err = db.database.Exec(query, email, newPassword)
+	_, err = DB.Database.Exec(query, email, newPassword)
 	if err != nil {
 		loger.Error("Failed to update user in the database", err)
 	}
@@ -22,13 +22,13 @@ func UserPasswordChange(email string, newPassword string) (err error) {
 // UserEmailChange updates a user's email address in the database
 func UserEmailChange(email string, newEmail string) (err error) {
 	query := `
-		UPDATE ` + db.tableUsers + `
+		UPDATE ` + DB.TableUsers + `
 		SET	email = $2,
 			updated_at = CURRENT_TIMESTAMP
 		WHERE email = $1;
 	`
 
-	_, err = db.database.Exec(query, email, newEmail)
+	_, err = DB.Database.Exec(query, email, newEmail)
 	if err != nil {
 		loger.Error("Failed to update user in the users table", err)
 	}
@@ -38,12 +38,12 @@ func UserEmailChange(email string, newEmail string) (err error) {
 	}
 
 	query = `
-		UPDATE ` + db.tableDevices + `
+		UPDATE ` + DB.TableDevices + `
 		SET	email = $2
 		WHERE email = $1;
 	`
 
-	_, err = db.database.Exec(query, email, newEmail)
+	_, err = DB.Database.Exec(query, email, newEmail)
 	if err != nil {
 		loger.Error("Failed to update devices in the devices table", err)
 	}

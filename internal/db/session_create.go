@@ -12,7 +12,7 @@ func SessionCreate(email string, accessToken string, refreshToken string, isOneT
 	}
 
 	query := `
-		INSERT INTO ` + db.tableSessions + ` (
+		INSERT INTO ` + DB.TableSessions + ` (
 			email,
 			access_token,
 			refresh_token,
@@ -27,7 +27,7 @@ func SessionCreate(email string, accessToken string, refreshToken string, isOneT
 		)
 	`
 
-	_, err = db.database.Exec(query, email, accessToken, refreshToken, isOneTime)
+	_, err = DB.Database.Exec(query, email, accessToken, refreshToken, isOneTime)
 	if err != nil {
 		loger.Error("Failed to create session in the database", err)
 	}

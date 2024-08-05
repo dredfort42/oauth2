@@ -10,28 +10,28 @@ import (
 
 // Database is the database struct
 type Database struct {
-	database      *sql.DB
-	tableUsers    string
-	tableSessions string
-	tableDevices  string
+	Database      *sql.DB
+	TableUsers    string
+	TableSessions string
+	TableDevices  string
 }
 
-var db Database
+var DB Database
 
 // DatabaseInit initializes the database
 func DatabaseInit() {
-	db.tableUsers = cfg.Config["db.table.users"]
-	if db.tableUsers == "" {
+	DB.TableUsers = cfg.Config["db.table.users"]
+	if DB.TableUsers == "" {
 		panic("Table users is not set")
 	}
 
-	db.tableSessions = cfg.Config["db.table.sessions"]
-	if db.tableSessions == "" {
+	DB.TableSessions = cfg.Config["db.table.sessions"]
+	if DB.TableSessions == "" {
 		panic("Table sessions is not set")
 	}
 
-	db.tableDevices = cfg.Config["db.table.devices"]
-	if db.tableDevices == "" {
+	DB.TableDevices = cfg.Config["db.table.devices"]
+	if DB.TableDevices == "" {
 		panic("Table devices is not set")
 	}
 

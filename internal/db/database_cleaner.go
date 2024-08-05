@@ -20,22 +20,22 @@ func databaseCleanerStart() {
 		go func() {
 			for {
 				query := `
-				DELETE FROM ` + db.tableSessions + `
+				DELETE FROM ` + DB.TableSessions + `
 				WHERE is_one_time = TRUE
 				AND created_at < CURRENT_TIMESTAMP - INTERVAL '` + strconv.Itoa(s.JWTConfig.OneTimeAccessTokenExpiration) + ` seconds';
 			`
 
-				_, err := db.database.Exec(query)
+				_, err := DB.Database.Exec(query)
 				if err != nil {
 					loger.Error("Failed to delete sessions with expired one-time tokens", err)
 				}
 
 				query = `
-				DELETE FROM ` + db.tableSessions + `
+				DELETE FROM ` + DB.TableSessions + `
 				WHERE is_one_time = FALSE
 				AND created_at < CURRENT_TIMESTAMP - INTERVAL '` + strconv.Itoa(s.JWTConfig.BrowserRefreshTokenExpiration) + ` seconds';
 			`
-				_, err = db.database.Exec(query)
+				_, err = DB.Database.Exec(query)
 				if err != nil {
 					loger.Error("Failed to delete sessions with expired browser tokens", err)
 				}
