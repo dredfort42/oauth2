@@ -23,7 +23,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-    - name: Build and push Docker image for auch
+    - name: Build and push Docker image for auch service
       run: |
         docker pull dredfort/auth:latest || true
         docker build -t dredfort/auth:latest .

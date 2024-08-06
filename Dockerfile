@@ -15,6 +15,5 @@ RUN CGO_ENABLED=0 go build -o ./auth ./cmd/auth/main.go
 
 FROM scratch
 COPY --from=build /app/auth /app/auth
-COPY --from=build /app/config.ini /app/config.ini
 
 CMD ["/app/auth"]
