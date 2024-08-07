@@ -10,7 +10,6 @@ import (
 
 // DeviceRefresh refreshes the device's access and refresh tokens
 func DeviceRefresh(c *gin.Context) {
-	var deviceUUID string
 	var errorResponse s.ResponseError
 	var err error
 
@@ -32,15 +31,22 @@ func DeviceRefresh(c *gin.Context) {
 		return
 	}
 
-	deviceUUID, err = verifyToken(refreshToken, s.DeviceRefreshToken)
-	if err != nil || deviceUUID != clientID {
+	email, err := verifyToken(refreshToken, s.DeviceRefreshToken)
+	if err != nil {
 		errorResponse.Error = "token_error"
 		errorResponse.ErrorDescription = "failed to verify device refresh token"
 		c.IndentedJSON(http.StatusUnauthorized, errorResponse)
 		return
 	}
 
-	deviceAccessToken, deviceRefreshToken, err := getTokens(deviceUUID, s.JWTConfig.DeviceAccessTokenExpiration, s.JWTConfig.DeviceRefreshTokenExpiration)
+	if !db.DeviceIdentify(clientID, email) {
+		errorResponse.Error = "token_error"
+		errorResponse.ErrorDescription = "failed to verify device refresh token"
+		c.IndentedJSON(http.StatusUnauthorized, errorResponse)
+		return
+	}
+
+	deviceAccessToken, deviceRefreshToken, err := getTokens(clientID, s.JWTConfig.DeviceAccessTokenExpiration, s.JWTConfig.DeviceRefreshTokenExpiration)
 	if err != nil {
 		errorResponse.Error = "token_error"
 		errorResponse.ErrorDescription = "failed to generate device tokens | " + err.Error()
@@ -48,7 +54,7 @@ func DeviceRefresh(c *gin.Context) {
 		return
 	}
 
-	err = db.DeviceRefresh(deviceUUID, deviceAccessToken, deviceRefreshToken)
+	err = db.DeviceRefresh(clientID, deviceAccessToken, deviceRefreshToken)
 	if err != nil {
 		errorResponse.Error = "database_error"
 		errorResponse.ErrorDescription = "failed to update device tokens in the database | " + err.Error()

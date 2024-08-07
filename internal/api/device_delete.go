@@ -9,7 +9,6 @@ import (
 )
 
 func DeviceDelete(c *gin.Context) {
-	var deviceUUID string
 	var errorResponse s.ResponseError
 	var err error
 
@@ -31,7 +30,7 @@ func DeviceDelete(c *gin.Context) {
 		return
 	}
 
-	deviceUUID, err = verifyToken(accessToken, s.DeviceAccessToken)
+	_, err = verifyToken(accessToken, s.DeviceAccessToken)
 	if err != nil {
 		errorResponse.Error = "token_error"
 		errorResponse.ErrorDescription = "failed to verify device access token"
@@ -39,7 +38,8 @@ func DeviceDelete(c *gin.Context) {
 		return
 	}
 
-	err = db.DeviceDelete(deviceUUID)
+	// clientID is the same as deviceUUID
+	err = db.DeviceDelete(clientID)
 	if err != nil {
 		errorResponse.Error = "internal_error"
 		errorResponse.ErrorDescription = "failed to delete device from the database | " + err.Error()
