@@ -1,7 +1,6 @@
 package api
 
 import (
-	db "auth/internal/db"
 	s "auth/internal/structs"
 	"net/http"
 
