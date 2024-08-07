@@ -39,12 +39,5 @@ func DeviceIdentify(c *gin.Context) {
 		return
 	}
 
-	if !db.DeviceIdentify(clientID, email) {
-		errorResponse.Error = "token_error"
-		errorResponse.ErrorDescription = "failed to verify device access token"
-		c.IndentedJSON(http.StatusUnauthorized, errorResponse)
-		return
-	}
-
 	c.JSON(http.StatusOK, gin.H{"email": email})
 }

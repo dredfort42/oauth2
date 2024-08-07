@@ -31,15 +31,8 @@ func DeviceRefresh(c *gin.Context) {
 		return
 	}
 
-	email, err := verifyToken(refreshToken, s.DeviceRefreshToken)
+	_, err = verifyToken(refreshToken, s.DeviceRefreshToken)
 	if err != nil {
-		errorResponse.Error = "token_error"
-		errorResponse.ErrorDescription = "failed to verify device refresh token"
-		c.IndentedJSON(http.StatusUnauthorized, errorResponse)
-		return
-	}
-
-	if !db.DeviceIdentify(clientID, email) {
 		errorResponse.Error = "token_error"
 		errorResponse.ErrorDescription = "failed to verify device refresh token"
 		c.IndentedJSON(http.StatusUnauthorized, errorResponse)
